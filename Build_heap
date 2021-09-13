@@ -1,0 +1,61 @@
+
+//   C++ program to Build Min Heap from the given array.
+// For Max Heap also it is same by making few changes.  
+ 
+#include <iostream>
+#include <math.h>
+using namespace std;                       
+
+
+  void MIN_HEAPIFY(int a[],int n,int i)    // To heapify the node crresponding to each element in the index i 
+  {
+  int lchild,rchild;
+  lchild  =  2*i + 1;
+  rchild =   2*i + 2;
+  int smallest = i;
+  if(lchild<n && a[lchild]<a[smallest])
+  smallest = lchild;
+  if(rchild<n && a[rchild]<a[smallest])
+   smallest = rchild;
+   if(smallest!=i)
+   {
+   	swap(a[i],a[smallest]);
+   	MIN_HEAPIFY(a,n,smallest);
+   }
+  }
+  
+void Build_Heap(int a[],int n)
+{
+  int startindx = floor(n/2) - 1;   // startindx gives last  index of the internal node.//
+  for(int i = startindx;i>=0;i--)   
+  {
+   MIN_HEAPIFY(a,n,i);	
+  }	
+}
+void printarr(int a[],int n)
+{
+cout<<"the elements of the array afrer converting it to heap are\n";	
+for(int i=0;i<n;i++)
+{
+cout<<a[i]<<" ";	
+}	
+}
+
+int main()
+{
+ int n;
+ cout<<"Enter the value of n for the Size of the array\n";
+ cin>>n;
+ int a[n];
+ cout<<"Enter the value in the array\n";
+ for(int i=0;i<n;i++)
+ {
+ cin>>a[i];	
+ }
+ Build_Heap(a,n);
+ printarr(a,n);
+return 0;
+}
+// Time Complexity  O(N) 
+// Space complexity O(
+
