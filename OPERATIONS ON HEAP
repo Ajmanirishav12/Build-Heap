@@ -1,0 +1,162 @@
+
+// C++ program to Build Min Heap from the given array.
+// MIN_HEAPIFY FUNCTION TO MAINTAIN HEAP PROPERTY FOR REARRANGING THE NODES OF THE HEAP .O(LOGN)     WHERE (logn) IS THE HEIGHT OF THE COMPLETE BINARY TREE.
+// BUILD HEAP FUNCTION FOR CREATION OF HEAP FROM ARRAY//TIME COMPLEXITY O(N)  AND  NOT O(Nlogn) SPACE COMPLEXITY RECURSIVE SPACE O(logn).  
+// PRINTARR FUNCTION TO PRINT THE ELEMENT OF THE HEAP  O(N) 
+// DELETE_MIN FUNCTION TO DELETE THE MINIMUM ELEMENT OF THE HEAP TIME COMPLEXITY O(LOGN)
+// INSERT_ELEMENT TO INSERT THE ELEMENT IN THE HEAP  TIME COMPLEXITY O(LOGN)
+// DECREASE_ELEMENT FUNCTION TO DECREASE THE ELEMENT AT ANY INDEX IN THE HEAP.  TIME COMPLEXITY O(LOGN) 
+// For Max Heap also it is same just by making few changes.  
+ 
+#include <iostream>
+#include <algorithm>
+#include <math.h>
+using namespace std;                       
+
+
+void MIN_HEAPIFY(int a[],int n,int i)    // To heapify the node crresponding to each element in the index i  obtained fro the Build_Heap function.//
+  {
+  int lchild,rchild;
+  lchild  =  2*i + 1;
+  rchild =   2*i + 2;
+  int smallest = i;
+  if(lchild<n && a[lchild]<a[smallest])
+  smallest = lchild;
+  if(rchild<n && a[rchild]<a[smallest])
+   smallest = rchild;
+   if(smallest!=i)
+   {
+   	swap(a[i],a[smallest]);
+   	MIN_HEAPIFY(a,n,smallest);
+   }
+  }
+  
+void Build_Heap(int a[],int n)
+{
+  int startindx = floor(n/2) - 1;   // start indx gives the   index of the last internal node. and we start building heap from this position//
+  for(int i = startindx;i>=0;i--)   
+  {
+   MIN_HEAPIFY(a,n,i);	
+  }	
+}
+
+void printarr(int a[],int n)
+{
+cout<<"The Elements of the array after converting it to heap are\n";	
+for(int i=0;i<n;i++)
+{
+cout<<a[i]<<" ";	
+}	
+}
+
+void Delete_MIN(int a[],int n,int i)       // 1. To Delete MIN element from the Heap Time Complexity :- O(logn)   Space Complexity :- O(logn)(Call stack Space)  
+{
+if(n<1)
+cout<<"Heap Size Not Sufficient to Delete the element\n";
+int del = a[0];
+a[0]= a[n-1];
+n = n-1;
+MIN_HEAPIFY(a,n,0);
+}
+void INSERT_ELEMENT(int a[],int n) //Insert Element in the heap.
+{
+	int i = n;
+//Percolate the inserted key above so,that it satisfies heap property//
+  int v = (int) (ceil(i/2) - 1);
+while(i>0 && v>=0 &&  a[v]>a[i])
+{
+ swap(a[i],a[v]);
+ i = v;
+ v = ((int)ceil(i/2)-1);
+	}	
+}
+
+void decrease_element(int a[],int i,int n)    // Function to Decrease the element value at particular index and then arrange it to maintain heap property
+{
+cout<<"Enter the new Value of the element at index "<<i<<"\n";
+int key;
+cin>>key;
+a[i]=key;
+while(i>0)
+{
+ if(i%2==0)
+ {
+ 	if(a[(i-1)/2]>a[i])
+ 	{
+ 	swap(a[i],a[(i-1)/2]);
+    i = (i-1)/2;	
+      }
+ 	 else 
+ 	 break;
+ }
+	 else
+	 {
+	 	if(i%2==1)
+	 	{
+	 	if(a[i/2]>a[i])
+		 {	
+	 swap(a[i/2],a[i]);
+	  i=i/2;	
+		 }
+		 else
+		 break;
+			 }	
+	}		
+}
+}
+int main()
+{
+ int n;
+ cout<<"Enter the value of n for the Size of the array\n";
+ cin>>n;
+ int a[n];
+ cout<<"Enter the value in the array\n";
+ for(int i=0;i<n;i++)
+ {
+ cin>>a[i];	
+ }
+ Build_Heap(a,n);
+ printarr(a,n);
+ 
+ cout<<"\nThe Min Element in the Heap is =  "<<a[0]<<endl;
+ 
+   cout<<"Deleting Min element\n";
+   Delete_MIN(a,n,0);
+   cout<<"After Deleting\n";
+   printarr(a,n-1);
+   int val;
+   cout<<"Enter the value of the element to be inserted\n";
+   cin>>val;
+   a[n-1]=val;
+   cout<<"Inserting elements in the Heap\n";
+   INSERT_ELEMENT(a,n-1);
+   cout<<"After Inserting The Elements in the Heap are\n";
+   printarr(a,n);
+   int range;
+   cout<<"enter the Values in the range from 0 to n-1 for which you want to decrease the value\n";
+   cin>>range;
+   decrease_element(a,range,n);
+   cout<<"Updated value of the heap is \n";
+   printarr(a,n);
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
