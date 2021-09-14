@@ -1,0 +1,82 @@
+  
+  // HEAP_SORT CODE For MIN HEAP So,the array gets sorted in descending order.
+  // Total Time Complexity ---->  O(N) for build heap  + O(logn) for heapifying nodes   +   O((N-1)*log(n-1))    =   O(NLog(n))
+  // Space Complexity =  O(logn)  
+  
+    
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+using namespace std;
+void MIN_HEAPIFY(int a[],int idx,int n)    // Function For Min_HEAPIFY The Nodes.
+{
+ int lchild  = 2*idx + 1;
+ int rchild =  2*idx + 2;
+ int smallest = idx;
+ 
+ if(lchild<n && a[lchild]<a[smallest])
+ smallest = lchild;
+ 
+ if(rchild<n && a[rchild]<a[smallest])
+ 	smallest = rchild;
+	 	
+ 	if(smallest!=idx)
+ 	{
+ 	swap(a[smallest],a[idx]);
+	 MIN_HEAPIFY(a,smallest,n);	
+	 }	
+}
+
+
+void BUILD_HEAP(int a[],int n)     //Function to Build Heap. 
+{
+int startidx = (floor(n/2)-1);
+for(int i = startidx;i>=0;i--)
+{
+  MIN_HEAPIFY(a,i,n);	
+ }	
+}
+
+ void HEAP_SORT(int a[],int n)   //Function to Extract MINIMUM from the heap  and then heapify the node value usig MIN_HEAPIFY
+ {
+ 	int i,temp;
+ 	for(i = n-1;i>0;i--)
+ 	{
+	 temp = a[0];
+	 a[0]=a[i];
+	 a[i] = temp;
+	 MIN_HEAPIFY(a,0,i);	
+	 }
+ }
+ 
+ 
+void Print_Array(int a[],int n)  //Function to print the array
+{
+for(int i=0;i<n;i++)
+{
+	cout<<a[i]<<" ";
+	}	
+}
+
+int main()
+{
+int n;
+cout<<"Enter the size of the heap to be created\n";
+cin>>n;
+int a[n];
+cout<<"Enter the elements in the heap\n";
+for(int i=0;i<n;i++)
+{
+	cin>>a[i];
+	}
+	cout<<"Building the heap as follows\n";
+	BUILD_HEAP(a,n);
+	cout<<"The elements in the heap before sorting\n";
+	Print_Array(a,n);
+	cout<<"Sorting the elements in the heap\n";
+	HEAP_SORT(a,n);
+	cout<<"After Sorting the elelemntsin the heap are as follows\n";
+	Print_Array(a,n);
+ return 0;	
+}
+
